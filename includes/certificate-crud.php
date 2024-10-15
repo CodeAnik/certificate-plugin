@@ -24,9 +24,23 @@ function cac_create_certificate_table() {
     dbDelta($sql);
 }
 
+//add certificate
+
 function cac_add_certificate($data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'certificates';
+
+     // Check if the certificate number already exists
+     $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
+
+     if ($existing_certificate) {
+         // Get the existing certificate number
+        $existing_number = esc_html($existing_certificate->certificate_number);
+        return new WP_Error('certificate_number_exists',  "The certificate number must be unique. The number '$existing_number' already exists.");
+    }
+
+
+    // Proceed with the insert if the number is unique
 
     $wpdb->insert(
         $table_name,
@@ -65,6 +79,18 @@ function cac_update_certificate_by_id($id, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'certificates';
 
+    // Check if the certificate number already exists
+    $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
+
+    if ($existing_certificate) {
+         // Get the existing certificate number
+        $existing_number = esc_html($existing_certificate->certificate_number);
+        return new WP_Error('certificate_number_exists',  "The certificate number must be unique. The number '$existing_number' already exists.");
+    }
+
+
+    // Proceed with the insert if the number is unique
+
     $wpdb->update(
         $table_name,
         array(
@@ -91,5 +117,11 @@ function cac_delete_certificate_by_id($id) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'certificates';
 
-    return $wpdb->delete($table_name, array('id' => $id)); // Deletes the row with the given ID
+    return $wpdb->delete($table_name, array('id' => $id));
+}
+
+function cac_get_certificate_by_id($id) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'certificates';
+    return $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $id));
 }

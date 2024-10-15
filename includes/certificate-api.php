@@ -13,7 +13,7 @@ add_action('rest_api_init', function () {
         'permission_callback' => '__return_true', // Change this for better security
     ));
 
-    register_rest_route('cac/v1', '/certificates/(?P<id>\d+)', array(
+    register_rest_route('cac/v1', '/certificates/(?P<certificate_number>[a-zA-Z0-9]+)', array(
         'methods' => 'GET',
         'callback' => 'cac_get_certificate',
         'permission_callback' => '__return_true', // Change this for better security
@@ -51,10 +51,11 @@ function cac_create_certificate($request) {
     return new WP_REST_Response(array('id' => $insert_id), 201);
 }
 
-// Callback function to get a single certificate by ID
+
+// Callback function to get a single certificate by certificate_number
 function cac_get_certificate($request) {
-    $id = $request['id'];
-    $certificate = cac_get_certificate_by_serial($id);
+    $certificate_number = $request['certificate_number']; // Changed from 'id'
+    $certificate = cac_get_certificate_by_serial($certificate_number); // Adjusted to use certificate_number
 
     if (empty($certificate)) {
         return new WP_Error('no_certificate', 'Certificate not found', array('status' => 404));
