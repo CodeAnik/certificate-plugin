@@ -46,6 +46,7 @@ function cac_add_admin_menu() {
     );
 }
 
+
 function cac_add_certificate_form() {
     if (isset($_POST['submit_certificate'])) {
         // Process form submission
@@ -65,53 +66,55 @@ function cac_add_certificate_form() {
         }
     }
 
-    echo '<h2>Add New Certificate</h2>';
+    echo '<h2 class="label_heading">Add New Certificate</h2>';
     ?>
-    <form method="post" action="" enctype="multipart/form-data">
-        <label for="title">Certificate Title:</label>
-        <input type="text" name="title" placeholder="Title" required />
+    <form method="post" action="" class="certificate_form" enctype="multipart/form-data">
 
-        <label for="certificate_number">Certificate Number:</label>
-        <input type="text" name="certificate_number" placeholder="Certificate Number" required maxlength="7" />
+        <label for="title" class="label">Certificate Title:</label>
+        <input type="text" name="title" placeholder="Certificate Title" class="input_form" required />
 
-        <label for="item_description">Item Description:</label>
-        <textarea name="item_description" placeholder="Item Description" required></textarea>
+        <label for="certificate_number" class="label">Certificate Number:</label>
+        <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" required maxlength="7" />
 
-        <label for="match_used">Match Used:</label>
-        <select name="match_used" id="match_used" required>
+        <label for="item_description" class="label">Item Description:</label>
+        <textarea name="item_description" placeholder="Item Description" class="input_form" required></textarea>
+
+        <label for="match_used" class="label">Match Used:</label>
+        <select name="match_used" id="match_used" class="input_form" required>
             <option value="">Select Option</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
-        <label id="match_details_label" for="match_details" style="display: none;">Match Details:</label>
-        <textarea name="match_details" id="match_details" placeholder="Match Details" style="display: none;"></textarea>
+        <label id="match_details_label" for="match_details" style="display: none;" class="label">Match Details:</label>
+        <textarea name="match_details" id="match_details" placeholder="Match Details" style="display: none;" class="input_form"></textarea>
 
-        <label for="item_details">Item Details:</label>
-        <textarea name="item_details" placeholder="Item Details"></textarea>
+        <label for="item_details" class="label">Item Details:</label>
+        <textarea name="item_details" placeholder="Item Details" class="input_form"></textarea>
         
-        <label for="signed_by_player_name">Signed By Player Name:</label>
-        <input type="text" name="signed_by[player_name]" placeholder="Player Name" required />
+        <label for="signed_by_player_name" class="label">Signed By Player Name:</label>
+        <input type="text" name="signed_by[player_name]" placeholder="Player Name" class="input_form" required />
 
-        <label for="signed_by_profession">Signed By Profession:</label>
-        <input type="text" name="signed_by[occupation_or_professional_career]" placeholder="Professional Career" required />
+        <label for="signed_by_profession" class="label">Signed By Profession:</label>
+        <input type="text" name="signed_by[occupation_or_professional_career]" placeholder="Professional Career" class="input_form" required />
 
        <!-- Signed By Picture -->
-        <label for="signed_by_picture">Signed By Picture:</label>
-        <button type="button" class="button" id="upload_signed_by_picture">Upload Picture</button>
+        <label for="signed_by_picture" class="label">Signed By Picture:</label>
+        <button type="button" class="img_button" id="upload_signed_by_picture" >Upload Picture</button>
         <input type="hidden" name="signed_by[player_picture]" id="signed_by_player_picture_url" />
         <div id="signed_by_player_picture_preview"></div>
         
         <!-- Item Images -->
-        <label for="item_images">Item Images:</label>
-        <button type="button" class="button" id="upload_item_images">Upload Item Image</button>
+        <label for="item_images" class="label">Item Images:</label>
+        <button type="button" class="img_button" id="upload_item_images">Upload Item Image</button>
         <input type="hidden" name="item_images" id="item_images_url" />
         <div id="item_images_preview"></div>
 
-        <label for="signed_date">Date:</label>
-        <input type="date" name="signed_date" required />
+        <label for="signed_date" class="label">Date:</label>
+        <input type="date" name="signed_date" class="input_form certificate_date" required />
 
-        <input type="submit" name="submit_certificate" value="Add Certificate" />
+        <input type="submit" name="submit_certificate" class="certificate_button" value="Add Certificate" />
+
     </form>
 
     <script>
@@ -156,7 +159,7 @@ function cac_add_certificate_form() {
         mediaUploader_signedBy.on('select', function() {
             var attachment = mediaUploader_signedBy.state().get('selection').first().toJSON();
             $('#signed_by_player_picture_url').val(attachment.url); // Set the URL in the hidden field
-            $('#signed_by_player_picture_preview').html('<img src="' + attachment.url + '" style="max-width: 150px;" />'); // Show preview
+            $('#signed_by_player_picture_preview').html('<img src="' + attachment.url + '" style="max-width: 250px; margin-bottom:30px;" />'); // Show preview
         });
         mediaUploader_signedBy.open();
     });
@@ -178,7 +181,7 @@ function cac_add_certificate_form() {
         mediaUploader_itemImages.on('select', function() {
             var attachment = mediaUploader_itemImages.state().get('selection').first().toJSON();
             $('#item_images_url').val(attachment.url); // Set the URL in the hidden field
-            $('#item_images_preview').html('<img src="' + attachment.url + '" style="max-width: 150px;" />'); // Show preview
+            $('#item_images_preview').html('<img src="' + attachment.url + '" style="max-width: 250px; margin-bottom:30px;" />'); // Show preview
         });
         mediaUploader_itemImages.open();
     });
@@ -288,60 +291,60 @@ function cac_edit_certificate_form() {
 
             // Display the edit form pre-filled with certificate data
             ?>
-            <h2>Edit Certificate</h2>
-            <form method="post" action="" enctype="multipart/form-data">
-                <label for="title">Certificate Title:</label>
-                <input type="text" name="title" placeholder="Title" value="<?php echo esc_attr($certificate->title); ?>" required />
+            <h2 class="label_heading">Edit Certificate</h2>
+            <form method="post" action="" class="certificate_form" enctype="multipart/form-data">
+                <label for="title" class="label">Certificate Title:</label>
+                <input type="text" name="title" placeholder="Title" class="input_form" value="<?php echo esc_attr($certificate->title); ?>" required />
 
-                <label for="certificate_number">Certificate Number:</label>
-                <input type="text" name="certificate_number" placeholder="Certificate Number" value="<?php echo esc_attr($certificate->certificate_number); ?>" required maxlength="7" />
+                <label for="certificate_number" class="label">Certificate Number:</label>
+                <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" value="<?php echo esc_attr($certificate->certificate_number); ?>" required maxlength="7" />
 
-                <label for="item_description">Item Description:</label>
-                <textarea name="item_description" placeholder="Item Description" required><?php echo esc_textarea($certificate->item_description); ?></textarea>
+                <label for="item_description" class="label">Item Description:</label>
+                <textarea name="item_description" placeholder="Item Description" class="input_form" required><?php echo esc_textarea($certificate->item_description); ?></textarea>
 
-                <label for="match_used">Match Used:</label>
+                <label for="match_used" class="label">Match Used:</label>
                 <select name="match_used" id="match_used" required>
                     <option value="">Select Option</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>
 
-                <label id="match_details_label" for="match_details">Match Details:</label>
-                <textarea name="match_details" id="match_details" placeholder="Match Details" style="display: none;"></textarea>
+                <label id="match_details_label" for="match_details" class="label">Match Details:</label>
+                <textarea name="match_details" id="match_details" placeholder="Match Details" class="input_form" style="display: none;"></textarea>
 
-                <label for="item_details">Item Details:</label>
-                <textarea name="item_details" placeholder="Item Details"><?php echo esc_textarea($certificate->item_details); ?></textarea>
+                <label for="item_details" class="label">Item Details:</label>
+                <textarea name="item_details" placeholder="Item Details" class="input_form"><?php echo esc_textarea($certificate->item_details); ?></textarea>
 
-                <label for="signed_by_player_name">Signed By Player Name:</label>
-                <input type="text" name="signed_by[player_name]" placeholder="Player Name" value="<?php echo esc_attr($certificate->signed_by_player_name); ?>" required />
+                <label for="signed_by_player_name" class="label">Signed By Player Name:</label>
+                <input type="text" name="signed_by[player_name]" placeholder="Player Name" class="input_form" value="<?php echo esc_attr($certificate->signed_by_player_name); ?>" required />
 
-                <label for="signed_by_profession">Signed By Profession:</label>
-                <input type="text" name="signed_by[occupation_or_professional_career]" placeholder="Professional Career" value="<?php echo esc_attr($certificate->signed_by_profession); ?>" required />
+                <label for="signed_by_profession" class="label">Signed By Profession:</label>
+                <input type="text" name="signed_by[occupation_or_professional_career]" placeholder="Professional Career" class="input_form" value="<?php echo esc_attr($certificate->signed_by_profession); ?>" required />
 
                 <!-- Signed By Picture -->
-                <label for="signed_by_picture">Signed By Picture:</label>
-                <button type="button" class="button" id="upload_signed_by_picture">Upload Picture</button>
+                <label for="signed_by_picture" class="label">Signed By Picture:</label>
+                <button type="button" class="img_button" id="upload_signed_by_picture">Upload Picture</button>
                 <input type="hidden" name="signed_by[player_picture]" id="signed_by_player_picture_url" value="<?php echo esc_url($certificate->signed_by_picture); ?>" />
                 <div id="signed_by_player_picture_preview">
                     <?php if (!empty($certificate->signed_by_picture)) { ?>
-                        <img src="<?php echo esc_url($certificate->signed_by_picture); ?>" style="max-width: 150px;" />
+                        <img src="<?php echo esc_url($certificate->signed_by_picture); ?>" style="max-width: 250px; margin-bottom:30px;" />
                     <?php } ?>
                 </div>
 
                 <!-- Item Images -->
-                <label for="item_images">Item Images:</label>
-                <button type="button" class="button" id="upload_item_images">Upload Item Image</button>
+                <label for="item_images" class="label">Item Images:</label>
+                <button type="button" class="img_button" id="upload_item_images">Upload Item Image</button>
                 <input type="hidden" name="item_images" id="item_images_url" value="<?php echo esc_url($certificate->item_images); ?>" />
                 <div id="item_images_preview">
                     <?php if (!empty($certificate->item_images)) { ?>
-                        <img src="<?php echo esc_url($certificate->item_images); ?>" style="max-width: 150px;" />
+                        <img src="<?php echo esc_url($certificate->item_images); ?>" style="max-width: 250px; margin-bottom:30px;" />
                     <?php } ?>
                 </div>
 
-                <label for="signed_date">Date:</label>
-                <input type="date" name="signed_date" value="<?php echo esc_attr(date('Y-m-d', strtotime($certificate->signed_date))); ?>" required />
+                <label for="signed_date" class="label">Date:</label>
+                <input type="date" name="signed_date" class="input_form certificate_date" value="<?php echo esc_attr(date('Y-m-d', strtotime($certificate->signed_date))); ?>" required />
 
-                <input type="submit" name="submit_certificate" value="Update Certificate" />
+                <input type="submit" class="certificate_button" name="submit_certificate" value="Update Certificate" />
             </form>
 
              <script>

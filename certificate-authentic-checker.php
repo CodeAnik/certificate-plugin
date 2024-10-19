@@ -2,7 +2,7 @@
 /*
 Plugin Name: Certificate Authentic Checker
 Description: A custom plugin to check certificate authenticity.
-Version: 1.0
+Version: 1.0.3
 Author: Md. Anik Khan
 */
 
@@ -29,3 +29,9 @@ function cac_deactivate_plugin() {
 
 // Include API functions
 require_once plugin_dir_path(__FILE__) . 'includes/certificate-api.php';
+
+// Enqueue CSS for the admin form
+add_action('admin_enqueue_scripts', 'certificate_admin_styles');
+function certificate_admin_styles() {
+    wp_enqueue_style('certificate-admin-css', plugin_dir_url(__FILE__) . 'css/admin-styles.css');
+}
