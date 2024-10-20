@@ -79,23 +79,30 @@ function cac_update_certificate_by_id($id, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'certificates';
 
-    // Check if the certificate number already exists
-    $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
+    // Fetch the existing certificate by ID to compare the certificate number
+    $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $id));
 
-    if ($existing_certificate) {
-         // Get the existing certificate number
-        $existing_number = esc_html($existing_certificate->certificate_number);
-        return new WP_Error('certificate_number_exists',  "The certificate number must be unique. The number '$existing_number' already exists.");
+    if (!$existing_certificate) {
+        return new WP_Error('certificate_not_found', 'Certificate not found.');
     }
 
+    // Check if the certificate number is being updated to a number that already exists in another record
+    if ($data['certificate_number'] !== $existing_certificate->certificate_number) {
+        $duplicate_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
 
-    // Proceed with the insert if the number is unique
+        if ($duplicate_certificate) {
+            // Get the existing certificate number
+            $existing_number = esc_html($duplicate_certificate->certificate_number);
+            return new WP_Error('certificate_number_exists', "The certificate number must be unique. The number '$existing_number' already exists.");
+        }
+    }
 
+    // Proceed with the update, excluding the certificate number since it should not be changed
     $wpdb->update(
         $table_name,
         array(
             'title' => sanitize_text_field($data['title']),
-            'certificate_number' => sanitize_text_field($data['certificate_number']),
+            // 'certificate_number' => sanitize_text_field($data['certificate_number']), // Do not update this field
             'item_description' => sanitize_textarea_field($data['item_description']),
             'match_used' => sanitize_text_field($data['match_used']),
             'match_details' => sanitize_textarea_field($data['match_details']),
@@ -111,6 +118,7 @@ function cac_update_certificate_by_id($id, $data) {
 
     return $wpdb->rows_affected; // Returns the number of affected rows
 }
+
 
 
 function cac_delete_certificate_by_id($id) {

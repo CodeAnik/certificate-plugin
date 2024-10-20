@@ -25,16 +25,17 @@
 .input_form {
     width: 48%;
     /* Make input fields 48% to leave some space for gap */
-    padding: 12px 20px;
+    padding: 20px 20px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
+    line-height: 26;
 }
 
 textarea.input_form {
-    height: 120px;
+    height: 140px;
 }
 
 .certificate_button {
@@ -56,7 +57,7 @@ textarea.input_form {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
-
+    cursor: pointer !important;
 }
 
 

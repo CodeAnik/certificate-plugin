@@ -296,8 +296,8 @@ function cac_edit_certificate_form() {
                 <label for="title" class="label">Certificate Title:</label>
                 <input type="text" name="title" placeholder="Title" class="input_form" value="<?php echo esc_attr($certificate->title); ?>" required />
 
-                <label for="certificate_number" class="label">Certificate Number:</label>
-                <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" value="<?php echo esc_attr($certificate->certificate_number); ?>" required maxlength="7" />
+                <label for="certificate_number" class="label">Certificate Number: <p style="color: red; font-size: 12px; margin-bottom:-4px; margin-top:0px;">You Can't Update Certificate Number</p></label>
+                <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" style="color:#000000;" value="<?php echo esc_attr($certificate->certificate_number); ?>" required maxlength="7" disabled/>
 
                 <label for="item_description" class="label">Item Description:</label>
                 <textarea name="item_description" placeholder="Item Description" class="input_form" required><?php echo esc_textarea($certificate->item_description); ?></textarea>
@@ -305,12 +305,12 @@ function cac_edit_certificate_form() {
                 <label for="match_used" class="label">Match Used:</label>
                 <select name="match_used" id="match_used" required>
                     <option value="">Select Option</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="Yes" <?php selected($certificate->match_used, 'Yes'); ?>>Yes</option>
+                    <option value="No" <?php selected($certificate->match_used, 'No'); ?>>No</option>
                 </select>
 
-                <label id="match_details_label" for="match_details" class="label">Match Details:</label>
-                <textarea name="match_details" id="match_details" placeholder="Match Details" class="input_form" style="display: none;"></textarea>
+                <label id="match_details_label" for="match_details" class="label" style="<?php echo ($certificate->match_used === 'Yes') ? '' : 'display: none;'; ?>">Match Details:</label>
+                <textarea name="match_details" id="match_details" placeholder="Match Details" class="input_form" style="<?php echo ($certificate->match_used === 'Yes') ? '' : 'display: none;'; ?>"><?php echo esc_textarea($certificate->match_details); ?></textarea>
 
                 <label for="item_details" class="label">Item Details:</label>
                 <textarea name="item_details" placeholder="Item Details" class="input_form"><?php echo esc_textarea($certificate->item_details); ?></textarea>
