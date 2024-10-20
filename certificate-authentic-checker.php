@@ -2,8 +2,10 @@
 /*
 Plugin Name: Certificate Authentic Checker
 Description: A custom plugin to check certificate authenticity.
-Version: 1.0.3
-Author: Md. Anik Khan
+Version: 1.0.4
+Last Upadate: 20/10/2024
+Author: Dgency
+Author URI: https://dgency.com/our-team/
 */
 
 if (!defined('ABSPATH')) {
