@@ -1,10 +1,10 @@
 /* Styling for the certificate form */
 .certificate_form {
-    width: auto;
+    width: 50%;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 30px;
     display: grid;
     flex-wrap: wrap;
     gap: 10px;
@@ -14,7 +14,7 @@
 .label {
     font-size: 18px;
     font-weight: 500;
-    width: 100%;
+    width: fit-content;
 }
 
 .label_heading{
@@ -23,7 +23,7 @@
 }
 
 .input_form {
-    width: 48%;
+    width: 100%;
     /* Make input fields 48% to leave some space for gap */
     padding: 20px 20px;
     margin-bottom: 20px;
@@ -31,15 +31,27 @@
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
-    line-height: 26;
+    line-height: 26px !important;
+    height: 50px;
 }
 
-textarea.input_form {
-    height: 140px;
+.resize_textarea{
+width: 100%;
+padding: 20px 20px;
+margin-bottom: 20px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+font-size: 16px;
+line-height: 26px !important;
 }
+
+/* .textarea.input_form {
+    height: 200px;
+}  */
 
 .certificate_button {
-    width: 20%;
+    width: 50%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -47,10 +59,11 @@ textarea.input_form {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 18px;
 }
 
 .img_button {
-    width: 48%;
+    width: 50%;
     padding: 12px 20px;
     margin: 8px 0;
     border: 1px solid #ccc;
@@ -67,4 +80,103 @@ textarea.input_form {
 
 .certificate_date{
     width: 250px !important;
+}
+
+.button_delete{
+    background-color: #e40000;
+    color: white;
+    padding: 6px 20px 6px 20px;
+}
+.button_delete:hover{
+    background-color: #aa0101;
+    color: white;
+}
+.button_edit{
+    background-color: #05aaf7;
+    color: white;
+    padding: 6px 20px 6px 20px;
+}
+.button_edit:hover{
+    background-color: #008bcc;
+    color: white;
+}
+.button_view{
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 20px 6px 20px;
+}
+.button_view:hover{
+    background-color: #238a26;
+    color: white;
+}
+
+.widefat tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.widefat th {
+    font-size: 16px;
+    text-align: left;
+    background-color: #dbdbdb;
+    color: white;
+    font-weight: 500;
+}
+
+.widefat td{
+    font-size: 14px;
+}
+
+.view_certificate{
+    font-size: 16px;
+}
+
+.certificate_container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.certificate_container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.certificate_detail p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.certificate_detail p strong {
+    font-weight: bold;
+    color: #0073aa;
+}
+
+.certificate_detail img {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.back_button {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #0073aa;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 150px;
+}
+
+.main_heading{
+    font-size: 30px;
+    font-weight: 700;
 }

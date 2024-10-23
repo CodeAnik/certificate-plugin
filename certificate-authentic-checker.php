@@ -2,10 +2,15 @@
 /*
 Plugin Name: Certificate Authentic Checker
 Description: A custom plugin to check certificate authenticity.
-Version: 1.0.4
+Version: 1.0.6
 Last Upadate: 20/10/2024
 Author: Dgency
 Author URI: https://dgency.com/our-team/
+License: GPL2
+
+// GitHub Plugin Information
+GitHub Plugin URI: https://github.com/CodeAnik/certificate-plugin
+GitHub Branch: main
 */
 
 if (!defined('ABSPATH')) {
@@ -15,6 +20,11 @@ if (!defined('ABSPATH')) {
 // Include core functions
 require_once plugin_dir_path(__FILE__) . 'includes/certificate-crud.php';
 require_once plugin_dir_path(__FILE__) . 'includes/certificate-admin.php';
+
+
+
+
+
 
 // Plugin initialization
 function cac_activate_plugin() {

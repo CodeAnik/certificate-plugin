@@ -46,6 +46,14 @@ function cac_add_admin_menu() {
     );
 }
 
+// In your main plugin file
+add_action('admin_menu', 'cac_display_certificates');
+
+function cac_display_certificates() {
+    echo 'Displaying certificates...';
+}
+
+
 
 function cac_add_certificate_form() {
     if (isset($_POST['submit_certificate'])) {
@@ -77,7 +85,7 @@ function cac_add_certificate_form() {
         <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" required maxlength="7" />
 
         <label for="item_description" class="label">Item Description:</label>
-        <textarea name="item_description" placeholder="Item Description" class="input_form" required></textarea>
+        <textarea name="item_description" rows="6" placeholder="Item Description" class="resize_textarea" required></textarea>
 
         <label for="match_used" class="label">Match Used:</label>
         <select name="match_used" id="match_used" class="input_form" required>
@@ -87,10 +95,10 @@ function cac_add_certificate_form() {
         </select>
 
         <label id="match_details_label" for="match_details" style="display: none;" class="label">Match Details:</label>
-        <textarea name="match_details" id="match_details" placeholder="Match Details" style="display: none;" class="input_form"></textarea>
+        <textarea name="match_details" rows="6" id="match_details" placeholder="Match Details" style="display: none;" class="resize_textarea"></textarea>
 
         <label for="item_details" class="label">Item Details:</label>
-        <textarea name="item_details" placeholder="Item Details" class="input_form"></textarea>
+        <textarea name="item_details" rows="6" placeholder="Item Details" class="resize_textarea"></textarea>
         
         <label for="signed_by_player_name" class="label">Signed By Player Name:</label>
         <input type="text" name="signed_by[player_name]" placeholder="Player Name" class="input_form" required />
@@ -113,8 +121,10 @@ function cac_add_certificate_form() {
         <label for="signed_date" class="label">Date:</label>
         <input type="date" name="signed_date" class="input_form certificate_date" required />
 
+
         <input type="submit" name="submit_certificate" class="certificate_button" value="Add Certificate" />
 
+        
     </form>
 
     <script>
@@ -206,7 +216,7 @@ function cac_view_certificate() {
     }
 
     // Display the certificate details
-    echo '<h2>View Certificate</h2>';
+    echo '<h2 class="label_heading" >View Certificate</h2>';
     echo '<p><strong>Title:</strong> ' . esc_html($certificate->title) . '</p>';
     echo '<p><strong>Certificate Number:</strong> ' . esc_html($certificate->certificate_number) . '</p>';
     echo '<p><strong>Item Description:</strong> ' . esc_html($certificate->item_description) . '</p>';
@@ -214,7 +224,7 @@ function cac_view_certificate() {
     echo '<p><strong>Match Details:</strong> ' . esc_html($certificate->match_details) . '</p>';
     echo '<p><strong>Item Details:</strong> ' . esc_html($certificate->item_details) . '</p>';
     echo '<p><strong>Signed By:</strong> ' . esc_html($certificate->signed_by_player_name) . ' (' . esc_html($certificate->signed_by_profession) . ')</p>';
-    echo '<p><strong>Signed Date:</strong> ' . esc_html(date('Y-m-d', strtotime($certificate->signed_date))) . '</p>';
+    echo '<p><strong>Signed Date:</strong> ' . esc_html(date('m-d-Y', strtotime($certificate->signed_date))) . '</p>';
 
     if (!empty($certificate->signed_by_picture)) {
         echo '<p><strong>Signed By Picture:</strong><br><img src="' . esc_url($certificate->signed_by_picture) . '" style="max-width:200px;"></p>';
@@ -255,7 +265,6 @@ function cac_handle_delete_certificate() {
 
 //Update the certificate information
 function cac_edit_certificate_form() {
-   
 
     if (isset($_GET['certificate_id'])) {
         $certificate_id = intval($_GET['certificate_id']);
@@ -300,7 +309,7 @@ function cac_edit_certificate_form() {
                 <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" style="color:#000000;" value="<?php echo esc_attr($certificate->certificate_number); ?>" required maxlength="7" disabled/>
 
                 <label for="item_description" class="label">Item Description:</label>
-                <textarea name="item_description" placeholder="Item Description" class="input_form" required><?php echo esc_textarea($certificate->item_description); ?></textarea>
+                <textarea name="item_description" rows="6" placeholder="Item Description" class="resize_textarea" required><?php echo esc_textarea($certificate->item_description); ?></textarea>
 
                 <label for="match_used" class="label">Match Used:</label>
                 <select name="match_used" id="match_used" required>
@@ -310,10 +319,10 @@ function cac_edit_certificate_form() {
                 </select>
 
                 <label id="match_details_label" for="match_details" class="label" style="<?php echo ($certificate->match_used === 'Yes') ? '' : 'display: none;'; ?>">Match Details:</label>
-                <textarea name="match_details" id="match_details" placeholder="Match Details" class="input_form" style="<?php echo ($certificate->match_used === 'Yes') ? '' : 'display: none;'; ?>"><?php echo esc_textarea($certificate->match_details); ?></textarea>
+                <textarea name="match_details" id="match_details" rows="6" placeholder="Match Details" class="resize_textarea" style="<?php echo ($certificate->match_used === 'Yes') ? '' : 'display: none;'; ?>"><?php echo esc_textarea($certificate->match_details); ?></textarea>
 
                 <label for="item_details" class="label">Item Details:</label>
-                <textarea name="item_details" placeholder="Item Details" class="input_form"><?php echo esc_textarea($certificate->item_details); ?></textarea>
+                <textarea name="item_details" placeholder="Item Details" rows="6" class="resize_textarea"><?php echo esc_textarea($certificate->item_details); ?></textarea>
 
                 <label for="signed_by_player_name" class="label">Signed By Player Name:</label>
                 <input type="text" name="signed_by[player_name]" placeholder="Player Name" class="input_form" value="<?php echo esc_attr($certificate->signed_by_player_name); ?>" required />
@@ -343,8 +352,10 @@ function cac_edit_certificate_form() {
 
                 <label for="signed_date" class="label">Date:</label>
                 <input type="date" name="signed_date" class="input_form certificate_date" value="<?php echo esc_attr(date('Y-m-d', strtotime($certificate->signed_date))); ?>" required />
+                
 
                 <input type="submit" class="certificate_button" name="submit_certificate" value="Update Certificate" />
+                
             </form>
 
              <script>
@@ -434,19 +445,21 @@ function cac_display_all_certificates() {
 
     $certificates = cac_get_all_certificates();
 
-    echo '<h2>All Certificates</h2>';
+    echo '<h2 class="label_heading">All Certificates</h2>';
     echo '<table class="widefat">';
-    echo '<thead><tr><th>ID</th><th>Title</th><th>Certificate Number</th><th>Actions</th></tr></thead>';
+    echo '<thead><tr><th>ID</th><th>Certificate Number</th><th>Signed By (Player Name)</th><th>Mactch Used(Yes/No)</th><th>Signed Date</th><th>Actions</th></tr></thead>';
     echo '<tbody>';
     foreach ($certificates as $certificate) {
         echo '<tr>';
         echo '<td>' . esc_html($certificate->id) . '</td>';
-        echo '<td>' . esc_html($certificate->title) . '</td>';
         echo '<td>' . esc_html($certificate->certificate_number) . '</td>';
+        echo '<td>' . esc_html($certificate->signed_by_player_name) . '</td>';
+        echo '<td>' . esc_html($certificate->match_used) . '</td>';
+        echo '<td>' . esc_html(date('m-d-Y', strtotime($certificate->signed_date))) . '</td>';
         echo '<td>';
-        echo '<a href="' . admin_url('admin.php?page=view-certificate&certificate_id=' . esc_attr($certificate->id)) . '" class="button">View</a> ';
-        echo '<a href="' . admin_url('admin.php?page=edit-certificate&certificate_id=' . esc_attr($certificate->id)) . '" class="button">Edit</a> ';
-        echo '<a href="' . wp_nonce_url(admin_url('admin.php?page=all-certificates&action=delete&certificate_id=' . esc_attr($certificate->id)), 'delete_certificate_' . $certificate->id) . '" class="button delete-button" onclick="return confirm(\'Are you sure you want to delete this certificate?\');">Delete</a>';
+        echo '<a href="' . admin_url('admin.php?page=view-certificate&certificate_id=' . esc_attr($certificate->id)) . '" class="button_view">View</a> ';
+        echo '<a href="' . admin_url('admin.php?page=edit-certificate&certificate_id=' . esc_attr($certificate->id)) . '" class="button_edit">Edit</a> ';
+        echo '<a href="' . wp_nonce_url(admin_url('admin.php?page=all-certificates&action=delete&certificate_id=' . esc_attr($certificate->id)), 'delete_certificate_' . $certificate->id) . '" class="button_delete" onclick="return confirm(\'Are you sure you want to delete this certificate?\');">Delete</a>';
         echo '</td>';
         echo '</tr>';
     }
