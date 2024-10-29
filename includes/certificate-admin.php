@@ -201,6 +201,10 @@ function cac_add_certificate_form() {
     <?php
 }
 
+
+
+//View All Certificate Functions 
+
 function cac_view_certificate() {
     if (!isset($_GET['certificate_id'])) {
         echo '<div class="notice notice-error"><p>No certificate found!</p></div>';
@@ -216,26 +220,63 @@ function cac_view_certificate() {
     }
 
     // Display the certificate details
-    echo '<h2 class="label_heading" >View Certificate</h2>';
-    echo '<p><strong>Title:</strong> ' . esc_html($certificate->title) . '</p>';
-    echo '<p><strong>Certificate Number:</strong> ' . esc_html($certificate->certificate_number) . '</p>';
-    echo '<p><strong>Item Description:</strong> ' . esc_html($certificate->item_description) . '</p>';
-    echo '<p><strong>Match Used:</strong> ' . esc_html($certificate->match_used) . '</p>';
-    echo '<p><strong>Match Details:</strong> ' . esc_html($certificate->match_details) . '</p>';
-    echo '<p><strong>Item Details:</strong> ' . esc_html($certificate->item_details) . '</p>';
-    echo '<p><strong>Signed By:</strong> ' . esc_html($certificate->signed_by_player_name) . ' (' . esc_html($certificate->signed_by_profession) . ')</p>';
-    echo '<p><strong>Signed Date:</strong> ' . esc_html(date('m-d-Y', strtotime($certificate->signed_date))) . '</p>';
+    echo '<div>';
+    ?>
+    <h2 class="label_heading">View Certificate</h2>
 
-    if (!empty($certificate->signed_by_picture)) {
-        echo '<p><strong>Signed By Picture:</strong><br><img src="' . esc_url($certificate->signed_by_picture) . '" style="max-width:200px;"></p>';
-    }
+    <div class="w3-certificate">
+        <!-- Certificate Header -->
+        <div class="certificate-title">Certificate of Authenticity</div>
+        <div class="certificate-subtitle">This certifies the authenticity of the item described below</div>
+        <div class="certificate-field" ><strong>Certificate Number:</strong> <?php echo esc_html($certificate->certificate_number); ?></div>
+        <div class="signature-date" style="margin-bottom: 40px;"><b>Signature Date:</b> <?php echo esc_html(date('F j, Y', strtotime($certificate->signed_date))); ?></div>
+        <!-- Certificate Details -->
+        <div class="certificate-details">
+            <div class="certificate-field"><strong>Certificate Title:</strong> <?php echo esc_html($certificate->title); ?></div>
+            <div class="certificate-field"><strong>Certificate Description:</strong> <?php echo esc_textarea($certificate->item_description); ?></div>
 
-    if (!empty($certificate->item_images)) {
-        echo '<p><strong>Item Images:</strong><br><img src="' . esc_url($certificate->item_images) . '" style="max-width:200px;"></p>';
-    }
+            <div class="certificate-field"><strong>Match Used:</strong> <?php echo esc_html($certificate->match_used); ?></div>
+            <?php if ($certificate->match_used === 'Yes'): ?>
+                <div class="certificate-field"><strong>Match Details:</strong> <?php echo esc_textarea($certificate->match_details); ?></div>
+            <?php endif; ?>
 
-    echo '<a href="' . admin_url('admin.php?page=all-certificates') . '" class="button">Back to Certificates</a>';
+            <div class="certificate-field"><strong>Item Details:</strong> <?php echo esc_textarea($certificate->item_details); ?></div>
+        </div>
+
+        <!-- Date and Signature Section -->
+        <div class="signature-section">
+            <div class="signature-block">
+                <!-- Item Images -->
+                <?php if (!empty($certificate->item_images)): ?>
+                    <div class="items-details-img">
+                        <strong>Item Images:</strong>
+                        <br>
+                        <img src="<?php echo esc_url($certificate->item_images); ?>" style="max-width: 250px; margin-top: 10px;" />
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="signature-block">
+                <?php if (!empty($certificate->signed_by_picture)): ?>
+                <br>
+                <img src="<?php echo esc_url($certificate->signed_by_picture); ?>" class="player-img" />
+            <?php endif; ?>
+                <div>Signed By</div>
+                <div class="signature-line"></div>    
+                <div class="signature-title"><?php echo esc_html($certificate->signed_by_player_name); ?></div>
+                <div class="player-profession"><?php echo esc_html($certificate->signed_by_profession); ?></div>
+
+            </div>
+        </div>
+    </div>
+    <div class="button_container">
+        <a href="<?php echo admin_url('admin.php?page=all-certificates'); ?>" class="back_button" style="text-decoration:none;"><< Back to All Certificates</a>
+    </div>
+    
+    <?php
+    echo '</div>';
 }
+
+
 
 //delete certificate
 add_action('admin_init', 'cac_handle_delete_certificate');

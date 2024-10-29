@@ -10,7 +10,7 @@ Author URI: https://dgency.com/our-team/
 */
 
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly.
+    exit; // Exit if accessed directly.it
 }
 
 // Include core functions
