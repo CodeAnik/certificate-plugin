@@ -7,9 +7,9 @@ function cac_add_admin_menu() {
         'Certificates',
         'manage_options',
         'certificate-checker',
-        'cac_display_certificates',
-        'dashicons-awards',
-        6
+        'cac_display_all_certificates',
+        'dashicons-awards',             // Icon URL (dashicons-awards for an awards icon)
+        6                               // Position in the menu
     );
     add_submenu_page(
         'certificate-checker',
@@ -18,15 +18,6 @@ function cac_add_admin_menu() {
         'manage_options',
         'add-certificate',
         'cac_add_certificate_form'
-    );
-
-    add_submenu_page(
-        'certificate-checker',
-        'All Certificates',
-        'All Certificates',
-        'manage_options',
-        'all-certificates',
-        'cac_display_all_certificates'
     );
     add_submenu_page(
         null, // We don't want this page to appear in the menu, so we set it to null
@@ -47,11 +38,11 @@ function cac_add_admin_menu() {
 }
 
 // In your main plugin file
-add_action('admin_menu', 'cac_display_certificates');
+// add_action('admin_menu', 'cac_display_certificates');
 
-function cac_display_certificates() {
-    echo 'Displaying certificates...';
-}
+// function cac_display_certificates() {
+//     echo 'Displaying certificates...';
+// }
 
 
 
@@ -269,7 +260,7 @@ function cac_view_certificate() {
         </div>
     </div>
     <div class="button_container">
-        <a href="<?php echo admin_url('admin.php?page=all-certificates'); ?>" class="back_button" style="text-decoration:none;"><< Back to All Certificates</a>
+        <a href="<?php echo admin_url('admin.php?page=certificate-checker'); ?>" class="back_button" style="text-decoration:none;"><< Back to All Certificates</a>
     </div>
     
     <?php
@@ -295,7 +286,7 @@ function cac_handle_delete_certificate() {
 
         if ($deleted) {
             // Redirect back to the certificate list with a success message
-            wp_redirect(admin_url('admin.php?page=all-certificates&deleted=true'));
+            wp_redirect(admin_url('admin.php?page=certificate-checker&deleted=true'));
             exit;
         } else {
             // Handle the error if the certificate was not deleted
@@ -500,7 +491,7 @@ function cac_display_all_certificates() {
         echo '<td>';
         echo '<a href="' . admin_url('admin.php?page=view-certificate&certificate_id=' . esc_attr($certificate->id)) . '" class="button_view">View</a> ';
         echo '<a href="' . admin_url('admin.php?page=edit-certificate&certificate_id=' . esc_attr($certificate->id)) . '" class="button_edit">Edit</a> ';
-        echo '<a href="' . wp_nonce_url(admin_url('admin.php?page=all-certificates&action=delete&certificate_id=' . esc_attr($certificate->id)), 'delete_certificate_' . $certificate->id) . '" class="button_delete" onclick="return confirm(\'Are you sure you want to delete this certificate?\');">Delete</a>';
+        echo '<a href="' . wp_nonce_url(admin_url('admin.php?page=certificate-checker&action=delete&certificate_id=' . esc_attr($certificate->id)), 'delete_certificate_' . $certificate->id) . '" class="button_delete" onclick="return confirm(\'Are you sure you want to delete this certificate?\');">Delete</a>';
         echo '</td>';
         echo '</tr>';
     }

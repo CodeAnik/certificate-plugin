@@ -8,8 +8,8 @@
     display: grid;
     flex-wrap: wrap;
     gap: 10px;
-    /* Adds space between fields */
 }
+
 .view_certificate_form {
     width: 50%;
     border: 1px solid #ccc;
@@ -19,7 +19,6 @@
     display: grid;
     flex-wrap: wrap;
     gap: 10px;
-    /* Adds space between fields */
     padding-bottom: 20px;
 }
 
@@ -29,14 +28,13 @@
     width: fit-content;
 }
 
-.label_heading{
+.label_heading {
     font-size: 30px;
     font-weight: 700;
 }
 
 .input_form {
     width: 100%;
-    /* Make input fields 48% to leave some space for gap */
     padding: 20px 20px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
@@ -47,20 +45,20 @@
     height: 50px;
 }
 
-.resize_textarea{
-width: 100%;
-padding: 20px 20px;
-margin-bottom: 20px;
-border: 1px solid #ccc;
-border-radius: 4px;
-box-sizing: border-box;
-font-size: 16px;
-line-height: 26px !important;
+.resize_textarea {
+    width: 100%;
+    padding: 20px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 26px !important;
 }
 
-/* .textarea.input_form {
+.textarea.input_form {
     height: 200px;
-}  */
+} 
 
 .certificate_button {
     width: 50%;
@@ -227,10 +225,8 @@ line-height: 26px !important;
 .certificate-details {
     font-size: 18px;
     margin: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: normal;
+    display: block;
+    text-align: left;
 }
 .items-details-img {
     font-size: 18px;
@@ -267,23 +263,30 @@ line-height: 26px !important;
 }
 
 .player-img{
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.signature-title{
+.signature-title {
     font-size: 18px;
-    font-weight: 500px;
-    
+    font-weight: 500px !important;
+    display: block;
+    text-align: center;
+    padding-bottom: 4px;
+
 }
-.signature-date{
+
+.signature-date {
     font-size: 16px;
 }
 
-.player-profession{
+.player-profession {
     font-size: 12px;
-    font-weight: 300px;
+    font-weight: 300px !important;
+    display: block;
+    text-align: center;
+    max-width: 250px;
 }

@@ -18,8 +18,16 @@ require_once plugin_dir_path(__FILE__) . 'includes/certificate-crud.php';
 require_once plugin_dir_path(__FILE__) . 'includes/certificate-admin.php';
 
 
+// Hook for plugin uninstallation
+function cac_plugin_uninstall() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'certificate_information';
 
-
+    // SQL to drop the table on plugin uninstallation
+    $sql = "DROP TABLE IF EXISTS $table_name;";
+    $wpdb->query($sql);
+}
+register_uninstall_hook(__FILE__, 'cac_plugin_uninstall');
 
 
 // Plugin initialization
