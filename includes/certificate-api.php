@@ -35,6 +35,11 @@ add_action('rest_api_init', function () {
 // Callback function to get all certificates
 function cac_get_certificates($request) {
     $certificates = cac_get_all_certificates();
+
+    // Add headers to prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Pragma: no-cache');
+
     return new WP_REST_Response($certificates, 200);
 }
 
@@ -60,6 +65,10 @@ function cac_get_certificate($request) {
     if (empty($certificate)) {
         return new WP_Error('no_certificate', 'Certificate not found', array('status' => 404));
     }
+
+    // Add headers to prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Pragma: no-cache');
 
     return new WP_REST_Response($certificate, 200);
 }

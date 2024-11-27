@@ -45,7 +45,7 @@ function cac_add_admin_menu() {
 // }
 
 
-
+//Add Certificate Functions
 function cac_add_certificate_form() {
     if (isset($_POST['submit_certificate'])) {
         // Process form submission
@@ -91,21 +91,21 @@ function cac_add_certificate_form() {
         <label for="item_details" class="label">Item Details:</label>
         <textarea name="item_details" rows="6" placeholder="Item Details" class="resize_textarea"></textarea>
         
-        <label for="signed_by_player_name" class="label">Signed By Player Name:</label>
+        <label for="signed_by_player_name" class="label">Signatory's Name:</label>
         <input type="text" name="signed_by[player_name]" placeholder="Player Name" class="input_form" required />
 
-        <label for="signed_by_profession" class="label">Signed By Profession:</label>
+        <label for="signed_by_profession" class="label">Signatory's Professional Title:</label>
         <input type="text" name="signed_by[occupation_or_professional_career]" placeholder="Professional Career" class="input_form" required />
 
        <!-- Signed By Picture -->
-        <label for="signed_by_picture" class="label">Signed By Picture:</label>
-        <button type="button" class="img_button" id="upload_signed_by_picture" >Upload Picture</button>
+        <label for="signed_by_picture" class="label">Signatory's Photo:</label>
+        <button type="button" class="img_button" id="upload_signed_by_picture" >Upload Photo</button>
         <input type="hidden" name="signed_by[player_picture]" id="signed_by_player_picture_url" />
         <div id="signed_by_player_picture_preview"></div>
         
         <!-- Item Images -->
-        <label for="item_images" class="label">Item Images:</label>
-        <button type="button" class="img_button" id="upload_item_images">Upload Item Image</button>
+        <label for="item_images" class="label">Item Photo:</label>
+        <button type="button" class="img_button" id="upload_item_images">Upload Item Photo</button>
         <input type="hidden" name="item_images" id="item_images_url" />
         <div id="item_images_preview"></div>
 
@@ -217,48 +217,61 @@ function cac_view_certificate() {
 
     <div class="w3-certificate">
         <!-- Certificate Header -->
-        <div class="certificate-title">Certificate of Authenticity</div>
-        <div class="certificate-subtitle">This certifies the authenticity of the item described below</div>
-        <div class="certificate-field" ><strong>Certificate Number:</strong> <?php echo esc_html($certificate->certificate_number); ?></div>
-        <div class="signature-date" style="margin-bottom: 40px;"><b>Signature Date:</b> <?php echo esc_html(date('F j, Y', strtotime($certificate->signed_date))); ?></div>
-        <!-- Certificate Details -->
-        <div class="certificate-details">
-            <div class="certificate-field"><strong>Certificate Title:</strong> <?php echo esc_html($certificate->title); ?></div>
-            <div class="certificate-field"><strong>Certificate Description:</strong> <?php echo esc_textarea($certificate->item_description); ?></div>
-
-            <div class="certificate-field"><strong>Match Used:</strong> <?php echo esc_html($certificate->match_used); ?></div>
-            <?php if ($certificate->match_used === 'Yes'): ?>
-                <div class="certificate-field"><strong>Match Details:</strong> <?php echo esc_textarea($certificate->match_details); ?></div>
-            <?php endif; ?>
-
-            <div class="certificate-field"><strong>Item Details:</strong> <?php echo esc_textarea($certificate->item_details); ?></div>
+        <div class="certificate-title"><img src="https://certificate.thepickleballscoreboard.com/wp-content/uploads/2024/11/certificatelogo.png" alt="Certificate Logo" style="max-width: 300px; margin-bottom: 10px;"></div>
+        <div class="certificate-field-SN" style="margin-bottom: 60px; margin-top: 20px;">
+            <strong>Serial Number:</strong> <?php echo esc_html($certificate->certificate_number); ?>
+            <img src="https://certificate.thepickleballscoreboard.com/wp-content/uploads/2024/11/check.png" alt="icon" style="max-width: 18px; vertical-align: middle;">
         </div>
 
-        <!-- Date and Signature Section -->
-        <div class="signature-section">
-            <div class="signature-block">
-                <!-- Item Images -->
-                <?php if (!empty($certificate->item_images)): ?>
-                    <div class="items-details-img">
-                        <strong>Item Images:</strong>
-                        <br>
-                        <img src="<?php echo esc_url($certificate->item_images); ?>" style="max-width: 250px; margin-top: 10px;" />
+        <div class="certificate-wrapper">
+            <!-- Certificate Details -->
+            <div class="certificate-content">
+                <div class="certificate-details">
+                    <div class="certificate-field"><strong>Certificate Title:</strong> <?php echo esc_html($certificate->title); ?></div>
+                    <div class="certificate-field"><strong>Certificate Description:</strong> <?php echo esc_textarea($certificate->item_description); ?></div>
+                    <div class="certificate-field"><strong>Match Used:</strong> <?php echo esc_html($certificate->match_used); ?></div>
+                    <?php if ($certificate->match_used === 'Yes'): ?>
+                        <div class="certificate-field"><strong>Match Details:</strong> <?php echo esc_textarea($certificate->match_details); ?></div>
+                    <?php endif; ?>
+                    <div class="certificate-field"><strong>Item Details:</strong> <?php echo esc_textarea($certificate->item_details); ?></div>
+                    <div class="signature-date"><b>Signature Date:</b> <?php echo esc_html(date('F j, Y', strtotime($certificate->signed_date))); ?></div>
+                </div>
+            </div>
+
+            <!-- Date and Signature Section -->
+            <div class="signature-section">
+                <div class="signature-block">
+                    <!-- Item Images -->
+                    <?php if (!empty($certificate->item_images)): ?>
+                        <div class="items-details-img">
+                            <img src="<?php echo esc_url($certificate->item_images); ?>" style="max-width: 100%; height: 360px; border-radius:16px; margin-bottom:20px;" />
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="signature-block">
+                    <div class="certificate-field"><strong>Signed By</strong></div>
+                    <div class="signed-by-content">
+                        <!-- Column for Picture -->
+                        <?php if (!empty($certificate->signed_by_picture)): ?>
+                            <div class="signed-by-picture">
+                                <img src="<?php echo esc_url($certificate->signed_by_picture); ?>" class="player-img" />
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Column for Name and Profession -->
+                        <div class="signed-by-details">
+                            <div class="signature-title"><?php echo esc_html($certificate->signed_by_player_name); ?></div>
+                            <div class="player-profession"><?php echo esc_html($certificate->signed_by_profession); ?></div>
+                        </div>
                     </div>
-                <?php endif; ?>
-            </div>
-            <div class="signature-block">
-                <?php if (!empty($certificate->signed_by_picture)): ?>
-                <br>
-                <img src="<?php echo esc_url($certificate->signed_by_picture); ?>" class="player-img" />
-            <?php endif; ?>
-                <div>Signed By</div>
-                <div class="signature-line"></div>    
-                <div class="signature-title"><?php echo esc_html($certificate->signed_by_player_name); ?></div>
-                <div class="player-profession"><?php echo esc_html($certificate->signed_by_profession); ?></div>
-
+                </div>
             </div>
         </div>
+
+
     </div>
+
     <div class="button_container">
         <a href="<?php echo admin_url('admin.php?page=certificate-checker'); ?>" class="back_button" style="text-decoration:none;"><< Back to All Certificates</a>
     </div>
@@ -295,7 +308,7 @@ function cac_handle_delete_certificate() {
     }
 }
 
-//Update the certificate information
+//Update/Edit the certificate information
 function cac_edit_certificate_form() {
 
     if (isset($_GET['certificate_id'])) {
@@ -356,15 +369,15 @@ function cac_edit_certificate_form() {
                 <label for="item_details" class="label">Item Details:</label>
                 <textarea name="item_details" placeholder="Item Details" rows="6" class="resize_textarea"><?php echo esc_textarea($certificate->item_details); ?></textarea>
 
-                <label for="signed_by_player_name" class="label">Signed By Player Name:</label>
+                <label for="signed_by_player_name" class="label">Signatory's Name:</label>
                 <input type="text" name="signed_by[player_name]" placeholder="Player Name" class="input_form" value="<?php echo esc_attr($certificate->signed_by_player_name); ?>" required />
 
-                <label for="signed_by_profession" class="label">Signed By Profession:</label>
+                <label for="signed_by_profession" class="label">Signatory's Professional Title:</label>
                 <input type="text" name="signed_by[occupation_or_professional_career]" placeholder="Professional Career" class="input_form" value="<?php echo esc_attr($certificate->signed_by_profession); ?>" required />
 
                 <!-- Signed By Picture -->
-                <label for="signed_by_picture" class="label">Signed By Picture:</label>
-                <button type="button" class="img_button" id="upload_signed_by_picture">Upload Picture</button>
+                <label for="signed_by_picture" class="label">Signatory's Photo:</label>
+                <button type="button" class="img_button" id="upload_signed_by_picture">Upload Photo</button>
                 <input type="hidden" name="signed_by[player_picture]" id="signed_by_player_picture_url" value="<?php echo esc_url($certificate->signed_by_picture); ?>" />
                 <div id="signed_by_player_picture_preview">
                     <?php if (!empty($certificate->signed_by_picture)) { ?>
@@ -373,8 +386,8 @@ function cac_edit_certificate_form() {
                 </div>
 
                 <!-- Item Images -->
-                <label for="item_images" class="label">Item Images:</label>
-                <button type="button" class="img_button" id="upload_item_images">Upload Item Image</button>
+                <label for="item_images" class="label">Item Photo:</label>
+                <button type="button" class="img_button" id="upload_item_images">Upload Item Photo</button>
                 <input type="hidden" name="item_images" id="item_images_url" value="<?php echo esc_url($certificate->item_images); ?>" />
                 <div id="item_images_preview">
                     <?php if (!empty($certificate->item_images)) { ?>
@@ -479,7 +492,7 @@ function cac_display_all_certificates() {
 
     echo '<h2 class="label_heading">All Certificates</h2>';
     echo '<table class="widefat">';
-    echo '<thead><tr><th>ID</th><th>Certificate Number</th><th>Signed By (Player Name)</th><th>Mactch Used(Yes/No)</th><th>Signed Date</th><th>Actions</th></tr></thead>';
+    echo '<thead><tr><th>ID</th><th>Certificate Number</th><th>Signatory Name (Player Name)</th><th>Mactch Used(Yes/No)</th><th>Signed Date</th><th>Actions</th></tr></thead>';
     echo '<tbody>';
     foreach ($certificates as $certificate) {
         echo '<tr>';
