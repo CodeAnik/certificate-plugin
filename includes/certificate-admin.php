@@ -69,8 +69,8 @@ function cac_add_certificate_form() {
     ?>
     <form method="post" action="" class="certificate_form" enctype="multipart/form-data">
 
-        <label for="title" class="label">Certificate Title:</label>
-        <input type="text" name="title" placeholder="Certificate Title" class="input_form" required />
+        <!-- <label for="title" class="label">Certificate Title:</label>
+        <input type="text" name="title" placeholder="Certificate Title" class="input_form" required /> -->
 
         <label for="certificate_number" class="label">Certificate Number:</label>
         <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" required maxlength="7" />
@@ -227,7 +227,7 @@ function cac_view_certificate() {
             <!-- Certificate Details -->
             <div class="certificate-content">
                 <div class="certificate-details">
-                    <div class="certificate-field"><strong>Certificate Title:</strong> <?php echo esc_html($certificate->title); ?></div>
+                    <!-- <div class="certificate-field"><strong>Certificate Title:</strong>--> <?php //echo esc_html($certificate->title); ?><!--</div> -->
                     <div class="certificate-field"><strong>Certificate Description:</strong> <?php echo esc_textarea($certificate->item_description); ?></div>
                     <div class="certificate-field"><strong>Match Used:</strong> <?php echo esc_html($certificate->match_used); ?></div>
                     <?php if ($certificate->match_used === 'Yes'): ?>
@@ -347,8 +347,8 @@ function cac_edit_certificate_form() {
             ?>
             <h2 class="label_heading">Edit Certificate</h2>
             <form method="post" action="" class="certificate_form" enctype="multipart/form-data">
-                <label for="title" class="label">Certificate Title:</label>
-                <input type="text" name="title" placeholder="Title" class="input_form" value="<?php echo esc_attr($certificate->title); ?>" required />
+                <!-- <label for="title" class="label">Certificate Title:</label>
+                <input type="text" name="title" placeholder="Title" class="input_form" value="<?php //echo esc_attr($certificate->title); ?>" required /> -->
 
                 <label for="certificate_number" class="label">Certificate Number: <p style="color: red; font-size: 12px; margin-bottom:-4px; margin-top:0px;">You Can't Update Certificate Number</p></label>
                 <input type="text" name="certificate_number" placeholder="Certificate Number" class="input_form" style="color:#000000;" value="<?php echo esc_attr($certificate->certificate_number); ?>" required maxlength="7" disabled/>
