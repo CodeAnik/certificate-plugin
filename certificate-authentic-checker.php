@@ -1,11 +1,12 @@
 <?php
 /*
 Plugin Name: Certificate Authentic Checker
-Description: A custom plugin to check certificate authenticity.
-Version: 2.0.1
-Last Upadate: 05/11/2024
+Description: A WordPress plugin to verify the authenticity of pickleball items using a seven-digit serial number.
+Version: 2.0.3
+Last Upadate: 26/02/2025
 Author: Dgency
 Author URI: https://dgency.com/our-team/
+License: GPL2
 
 */
 
@@ -16,6 +17,7 @@ if (!defined('ABSPATH')) {
 // Include core functions
 require_once plugin_dir_path(__FILE__) . 'includes/certificate-crud.php';
 require_once plugin_dir_path(__FILE__) . 'includes/certificate-admin.php';
+require_once plugin_dir_path(__FILE__) . 'includes/certificate-api.php';
 
 
 // Hook for plugin uninstallation
@@ -43,8 +45,6 @@ function cac_deactivate_plugin() {
     // Actions to perform on plugin deactivation (if necessary)
 }
 
-// Include API functions
-require_once plugin_dir_path(__FILE__) . 'includes/certificate-api.php';
 
 // Enqueue CSS for the admin form
 add_action('admin_enqueue_scripts', 'certificate_admin_styles');

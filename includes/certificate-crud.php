@@ -25,23 +25,21 @@ function cac_create_certificate_table() {
 }
 
 //add certificate
-
 function cac_add_certificate($data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'certificates';
 
-     // Check if the certificate number already exists
-     $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
+    // Unslash input data before processing
+    $data = wp_unslash($data);
 
-     if ($existing_certificate) {
-         // Get the existing certificate number
-        $existing_number = esc_html($existing_certificate->certificate_number);
-        return new WP_Error('certificate_number_exists',  "The certificate number must be unique. The number '$existing_number' already exists.");
+    // Check if the certificate number already exists
+    $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
+
+    if ($existing_certificate) {
+        return new WP_Error('certificate_number_exists', "The certificate number '{$existing_certificate->certificate_number}' already exists.");
     }
 
-
-    // Proceed with the insert if the number is unique
-
+    // Insert data into database
     $wpdb->insert(
         $table_name,
         array(
@@ -59,8 +57,10 @@ function cac_add_certificate($data) {
         )
     );
 
-    return $wpdb->insert_id; // Return the ID of the new entry.
+    return $wpdb->insert_id;
 }
+
+
 
 function cac_get_all_certificates() {
     global $wpdb;
@@ -79,6 +79,9 @@ function cac_update_certificate_by_id($id, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'certificates';
 
+    // Unslash input data before processing
+    $data = wp_unslash($data);
+
     // Fetch the existing certificate by ID to compare the certificate number
     $existing_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $id));
 
@@ -91,18 +94,15 @@ function cac_update_certificate_by_id($id, $data) {
         $duplicate_certificate = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE certificate_number = %s", $data['certificate_number']));
 
         if ($duplicate_certificate) {
-            // Get the existing certificate number
-            $existing_number = esc_html($duplicate_certificate->certificate_number);
-            return new WP_Error('certificate_number_exists', "The certificate number must be unique. The number '$existing_number' already exists.");
+            return new WP_Error('certificate_number_exists', "The certificate number '{$duplicate_certificate->certificate_number}' already exists.");
         }
     }
 
-    // Proceed with the update, excluding the certificate number since it should not be changed
+    // Update data in the database
     $wpdb->update(
         $table_name,
         array(
             'title' => sanitize_text_field($data['title']),
-            // 'certificate_number' => sanitize_text_field($data['certificate_number']), // Do not update this field
             'item_description' => sanitize_textarea_field($data['item_description']),
             'match_used' => sanitize_text_field($data['match_used']),
             'match_details' => sanitize_textarea_field($data['match_details']),
